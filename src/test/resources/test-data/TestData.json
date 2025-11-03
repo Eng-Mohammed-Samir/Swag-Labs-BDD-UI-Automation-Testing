@@ -1,0 +1,25 @@
+{
+  "user_data":
+    {
+      "standard_user": "standard_user",
+      "locked_out_user": "locked_out_user",
+      "problem_user": "problem_user",
+      "performance_glitch_user": "performance_glitch_user",
+      "password": "secret_sauce"
+    },
+  "Products":
+  {
+    "product_1": "Backpack",
+    "product_2": "Bike Light",
+    "product_3": "Bolt T-Shirt",
+    "product_4": "Fleece Jacket",
+    "product_5": "Onesie",
+    "product_6": "T-Shirt (Red)"
+  },
+  "Checkout":
+  {
+    "first_name": "Mohammed",
+    "last_name": "Samir",
+    "postal_code": "12345"
+  }
+}
