@@ -19,6 +19,17 @@ public class ProductDetailsPage extends BasePage{
     private final By backToProducts_btn = By.id("back-to-products");
 
     // Page methods
+    @Step("Verify we are on product details page of '{expectedProductName}'")
+    public boolean areWeOnProductDetailsPageOf(String expectedProductName) {
+        if(super.waitForPageToLoad(productName, 5)){
+            String actualProductName = driver.findElement(productName).getText();
+            return actualProductName.toLowerCase().contains(expectedProductName.toLowerCase());
+        }
+        else {
+            return false;
+        }
+    }
+
     @Step("Get product name")
     public String getProductName() {
         return driver.findElement(productName).getText();

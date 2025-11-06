@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class CheckOutOverviewPage extends BasePage {
@@ -138,8 +140,10 @@ public class CheckOutOverviewPage extends BasePage {
     }
 
     @Step("Get Total amount")
-    public float getTotalAmount() {
+    public double getTotalAmount() {
         String totalValue = driver.findElement(total_label).getText().split("\\$")[1];
-        return Float.parseFloat(totalValue);
+        double value = Float.parseFloat(totalValue);
+        BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

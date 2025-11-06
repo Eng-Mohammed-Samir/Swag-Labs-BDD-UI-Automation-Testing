@@ -16,13 +16,13 @@ public class CheckOutComplete_steps {
         this.scenarioContext = context;
     }
 
-    @When("user clicks back home button")
-    public void user_clicks_back_home_button() {
+    @When("User clicks back home button")
+    public void User_clicks_back_home_button() {
         scenarioContext.getCheckOutCompletePage().navigateToInventoryPage();
     }
 
     @Then("User should be redirected to the checkout complete page")
-    public void user_should_be_redirected_to_the_checkout_complete_page() {
+    public void User_should_be_redirected_to_the_checkout_complete_page() {
         Assert.assertTrue(scenarioContext.getCheckOutCompletePage().areWeInCheckOutCompletePage());
     }
 

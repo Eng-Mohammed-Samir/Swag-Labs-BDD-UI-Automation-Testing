@@ -17,10 +17,8 @@ public class InventoryPage extends BasePage{
     private final By inventoryList = By.className("inventory_item");
     private final By itemName = By.className("inventory_item_name");
     private final By itemPrice = By.className("inventory_item_price");
-    private final By itemAddToCart_btn = By.xpath("//button[@class = 'btn btn_primary btn_small btn_inventory ']");
-    private final By itemRemoveFromCart_btn = By.xpath("//button[@class = 'btn btn_secondary btn_small btn_inventory ']");
+    private final By itemAddAndRemove_btn = By.xpath("//*[@class='pricebar']//button");
     private final By itemDescription = By.className("inventory_item_desc");
-    private final By cartProductsCounter = By.cssSelector(".shopping_cart_container .shopping_cart_badge");
     private final By filters_dropdown = By.className("product_sort_container");
 
     private Select filters;
@@ -88,12 +86,15 @@ public class InventoryPage extends BasePage{
     @Step("Add item '{item_Name}' to cart")
     public void addItemToCart(String item_Name){
         if(item_Name.length() >= 4){
-            List<WebElement> items = driver.findElements(inventoryList);
-            for (WebElement item : items) {
-                String name = item.findElement(itemName).getText();
+            List<WebElement> itemsNames = driver.findElements(itemName);
+            List<WebElement> itemAddToCartButtons = driver.findElements(itemAddAndRemove_btn);
+            for (int i=0; i<itemsNames.size(); i++) {
+                String name = itemsNames.get(i).getText();
                 if (name.toLowerCase().contains(item_Name.toLowerCase())
-                            && item.findElement(itemAddToCart_btn).isDisplayed()) {
-                    super.moveToElementAndClick(itemAddToCart_btn);
+                        && itemAddToCartButtons.get(i).getText().toLowerCase().contains("cart")) {
+                    WebElement elementAddToCartButton = itemAddToCartButtons.get(i);
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elementAddToCartButton);
+                    elementAddToCartButton.click();
                     break;
                 }
             }
@@ -103,12 +104,15 @@ public class InventoryPage extends BasePage{
     @Step("Remove item '{item_Name}' from cart")
     public void removeItemFromCart(String item_Name){
         if(item_Name.length() >= 4){
-            List<WebElement> items = driver.findElements(inventoryList);
-            for (WebElement item : items) {
-                String name = item.findElement(itemName).getText();
+            List<WebElement> itemsNames = driver.findElements(itemName);
+            List<WebElement> itemAddToCartButtons = driver.findElements(itemAddAndRemove_btn);
+            for (int i=0; i<itemsNames.size(); i++) {
+                String name = itemsNames.get(i).getText();
                 if (name.toLowerCase().contains(item_Name.toLowerCase())
-                            && item.findElement(itemRemoveFromCart_btn).isDisplayed()) {
-                    super.moveToElementAndClick(itemRemoveFromCart_btn);
+                        && itemAddToCartButtons.get(i).getText().toLowerCase().contains("remove")) {
+                    WebElement elementAddToCartButton = itemAddToCartButtons.get(i);
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elementAddToCartButton);
+                    elementAddToCartButton.click();
                     break;
                 }
             }
@@ -151,16 +155,5 @@ public class InventoryPage extends BasePage{
     public void filterByPriceFromHighToLow() {
         filters = new Select(driver.findElement(filters_dropdown));
         filters.selectByValue("hilo");
-    }
-
-    @Step("Get number of products in cart")
-    public int getNumberOfProductsInCart() {
-        String counterText = null;
-        try {
-            counterText = driver.findElement(cartProductsCounter).getText();
-        } catch (NoSuchElementException e) {
-            counterText = "0";
-        }
-        return Integer.parseInt(counterText);
     }
 }
