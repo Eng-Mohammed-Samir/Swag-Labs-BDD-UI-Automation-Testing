@@ -15,12 +15,22 @@ public class Cart_steps {
 
     // Step Definitions
     @When("User clicks checkout button")
-    public void user_clicks_checkout_button() {
+    public void User_clicks_checkout_button() {
         scenarioContext.getCartPage().clickCheckoutButton();
     }
 
-    @Then("user should be redirected to the cart page")
-    public void user_should_be_redirected_to_the_cart_page() {
+    @When("User removes {string} item from the cart")
+    public void User_removes_item_from_the_cart(String itemName) {
+        scenarioContext.getCartPage().removeCartItemByName(itemName);
+    }
+
+    @When(("User clicks on {string} item's name from the cart page"))
+    public void user_clicks_on_item_name(String itemName) {
+        scenarioContext.getCartPage().navigateToProductPageFromCart(itemName);
+    }
+
+    @Then("User should be redirected to the cart page")
+    public void User_should_be_redirected_to_the_cart_page() {
         Assert.assertTrue(scenarioContext.getCartPage().areWeInCartPage());
     }
 
@@ -29,5 +39,8 @@ public class Cart_steps {
         Assert.assertTrue(scenarioContext.getCartPage().isItemExist(itemName));
     }
 
-
+    @Then("{string} item should no longer be displayed in the cart")
+    public void item_should_no_longer_be_displayed_in_the_cart(String itemName) {
+        Assert.assertFalse(scenarioContext.getCartPage().isItemExist(itemName));
+    }
 }

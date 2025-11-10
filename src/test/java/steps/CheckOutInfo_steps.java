@@ -16,19 +16,19 @@ public class CheckOutInfo_steps {
     }
 
     @When("User fills in the checkout information form with valid data")
-    public void user_fills_in_the_checkout_information_form_with_valid_data() {
+    public void User_fills_in_the_checkout_information_form_with_valid_data() {
         scenarioContext.getCheckOutInfoPage().enterFirstName(scenarioContext.getCheckoutFirstName());
         scenarioContext.getCheckOutInfoPage().enterLastName(scenarioContext.getCheckoutLastName());
         scenarioContext.getCheckOutInfoPage().enterPostalCode(scenarioContext.getCheckoutPostalCode());
     }
 
     @When("User clicks continue button")
-    public void user_clicks_continue_button() {
+    public void User_clicks_continue_button() {
         scenarioContext.getCheckOutInfoPage().clickContinueButton();
     }
 
     @Then("User should be redirected to the checkout information page")
-    public void user_should_be_redirected_to_the_checkout_information_page() {
+    public void User_should_be_redirected_to_the_checkout_information_page() {
         Assert.assertTrue(scenarioContext.getCheckOutInfoPage().areWeInCheckOutInfoPage());
     }
 }

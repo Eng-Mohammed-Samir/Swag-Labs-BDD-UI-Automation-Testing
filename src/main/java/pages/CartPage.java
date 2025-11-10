@@ -80,11 +80,11 @@ public class CartPage extends BasePage{
     @Step("Navigate to {item_Name} Product's Page from Cart page")
     public void navigateToProductPageFromCart(String item_Name) {
         if(item_Name.length() >= 4){
-            List<WebElement> cartItems = driver.findElements(cartList);
-            for (WebElement item : cartItems) {
-                String name = item.findElement(cartItemName).getText();
+            List<WebElement> cartItemsNames = driver.findElements(cartItemName);
+            for (WebElement item : cartItemsNames) {
+                String name = item.getText();
                 if (name.toLowerCase().contains(item_Name.toLowerCase())) {
-                    item.findElement(cartItemName).click();
+                    item.click();
                     break;
                 }
             }
@@ -94,11 +94,12 @@ public class CartPage extends BasePage{
     @Step("Remove cart item: {itemName}")
     public void removeCartItemByName(String itemName) {
         if (itemName.length() >= 4) {
-            List<WebElement> cartItems = driver.findElements(cartList);
-            for (WebElement item : cartItems) {
-                String name = item.findElement(cartItemName).getText();
+            List<WebElement> cartItemsNames = driver.findElements(cartItemName);
+            List<WebElement> itemRemoveButtons = driver.findElements(cartItemRemove_btn);
+            for (int i = 0; i < cartItemsNames.size(); i++) {
+                String name = cartItemsNames.get(i).getText();
                 if (name.toLowerCase().contains(itemName.toLowerCase())) {
-                    item.findElement(cartItemRemove_btn).click();
+                    itemRemoveButtons.get(i).click();
                     break;
                 }
             }
@@ -107,11 +108,11 @@ public class CartPage extends BasePage{
 
     @Step("Remove all items from cart")
     public void removeAllItemsFromCart() {
-        List<WebElement> cartItems = driver.findElements(cartList);
-        while (!cartItems.isEmpty()) {
-            cartItems.get(0).findElement(cartItemRemove_btn).click();
+        List<WebElement> cartItemsRemove_btns = driver.findElements(cartItemRemove_btn);
+        while (!cartItemsRemove_btns.isEmpty()) {
+            cartItemsRemove_btns.get(0).findElement(cartItemRemove_btn).click();
             // re-fetch items list after DOM update
-            cartItems = driver.findElements(cartList);
+            cartItemsRemove_btns = driver.findElements(cartItemRemove_btn);
         }
     }
 

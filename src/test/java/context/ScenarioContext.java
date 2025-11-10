@@ -12,6 +12,7 @@ public class ScenarioContext {
     private SoftAssert softAssert;
 
     // Page Objects - Lazy initialization
+    private BasePage basePage;
     private CartPage cartPage;
     private CheckOutCompletePage checkOutCompletePage;
     private CheckOutInfoPage checkOutInfoPage;
@@ -46,6 +47,13 @@ public class ScenarioContext {
     }
 
     // ============== Page Objects - Lazy Initialization ==============
+    public BasePage getBasePage() {
+        if (basePage == null) {
+            basePage = new BasePage(driver);
+        }
+        return basePage;
+    }
+
     public CartPage getCartPage() {
         if (cartPage == null) {
             cartPage = new CartPage(driver);
